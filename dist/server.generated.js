@@ -705,6 +705,8 @@ const URI = process.env.MONGO_URL || `mongodb+srv://AaronBaron:AaronBaron@cluste
 const server = new ApolloServer({
   typeDefs,
   resolvers,
+  introspection: true,
+  playground: true,
   context: ({
     req
   }) => ({
