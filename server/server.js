@@ -6,7 +6,7 @@ const resolvers = require("./graphql/resolvers/main.resolvers.js")
 
 
 const PORT = process.env.PORT || 3000
-const URI = process.env.MONGO_URL
+const URI = process.env.MONGO_URL || `mongodb+srv://AaronBaron:AaronBaron@cluster0.syfka.gcp.mongodb.net/social-media-test?retryWrites=true&w=majority`
 
 const server = new ApolloServer({   
     typeDefs, 

@@ -336,7 +336,7 @@ module.exports = postResolvers;
   \****************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-const bscript = __webpack_require__(/*! bcryptjs */ "bcryptjs");
+const bcrypt = __webpack_require__(/*! bcryptjs */ "bcryptjs");
 
 const jwt = __webpack_require__(/*! jsonwebtoken */ "jsonwebtoken");
 
@@ -415,7 +415,8 @@ const userResolvers = {
       } // password crypting and token gen
 
 
-      password = await bscript.hash(password, 12);
+      password = await bcrypt.hash(password, 12); // 12 is the saltrounds
+
       const new_user = new User({
         username,
         email,
@@ -456,11 +457,13 @@ const userResolvers = {
         });
       }
 
-      const match = await bscript.compare(password, user.password);
+      const match = await bcrypt.compare(password, user.password);
 
       if (!match) {
         errors.general = "Incorrect Password";
-        throw new UserInputError("Incorrect Password");
+        throw new UserInputError("Incorrect Password", {
+          errors
+        });
       } // console.log("logged in successfully")
 
 
@@ -516,7 +519,7 @@ const userResolvers = {
       } //generate new password hash and update 
 
 
-      password = await bscript.hash(password, 12);
+      password = await bcrypt.hash(password, 12);
 
       try {
         const user = await User.findById(userId);

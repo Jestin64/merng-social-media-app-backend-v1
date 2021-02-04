@@ -1,4 +1,4 @@
-const bscript = require("bcryptjs")
+const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
 const { UserInputError } = require("apollo-server")
 
@@ -53,7 +53,7 @@ const userResolvers = {
             }
 
             // password crypting and token gen
-            password = await bscript.hash(password, 12)
+            password = await bcrypt.hash(password, 12) // 12 is the saltrounds
             const new_user = new User({
                 username,
                 email,
@@ -82,12 +82,12 @@ const userResolvers = {
             if (!user) {
                 errors.general = "User not found"
                 throw new UserInputError("User not found", { errors })
-            }
+            } 
 
-            const match = await bscript.compare(password, user.password)
+            const match = await bcrypt.compare(password, user.password)
             if (!match) {
                 errors.general = "Incorrect Password"
-                throw new UserInputError("Incorrect Password")
+                throw new UserInputError("Incorrect Password", { errors })
             }
 
             // console.log("logged in successfully")
@@ -127,7 +127,7 @@ const userResolvers = {
             }
 
             //generate new password hash and update 
-            password = await bscript.hash(password, 12)
+            password = await bcrypt.hash(password, 12)
             try{
                 const user = await User.findById(userId)
                 const allposts = await Post.find() 
