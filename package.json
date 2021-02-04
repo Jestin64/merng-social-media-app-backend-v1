@@ -33,7 +33,6 @@
   },
   "scripts": {
     "dev": "nodemon",
-    "build": "webpack --config webpack.client.production.config.js && webpack --mode=production --config webpack.server.config.js",
     "start": "node ./dist/server.generated.js"
   }
 }
