@@ -1,5 +1,12 @@
 {
     "verbose": false,
-    "watch" :["./server"],
-    "exec": "webpack --mode development --config webpack.server.config.js && node ./dist/server.generated.js"
+    "watch": [
+        "./src"
+    ],
+    "ignore": [
+        ".git",
+        "node_modules"
+    ],
+    "exec": "yarn jestin--start",
+    "ext": "ts"
 }
