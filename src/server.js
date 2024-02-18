@@ -4,16 +4,15 @@ const { ApolloServer } = require("apollo-server")
 const typeDefs = require("./graphql/typeDefs.js")
 const resolvers = require("./graphql/resolvers/main.resolvers.js")
 
+const PORT = process.env.PORT || 3000;
+const URI = process.env.MONGO_URL;
 
-const PORT = process.env.PORT || 3000
-const URI = process.env.MONGO_URL || `mongodb+srv://AaronBaron:AaronBaron@cluster0.syfka.gcp.mongodb.net/social-media-test?retryWrites=true&w=majority`
-
-const server = new ApolloServer({   
-    typeDefs, 
+const server = new ApolloServer({
+    typeDefs,
     resolvers,
     introspection: true,
     playground: true,
-    context: ({ req }) => ({req})
+    context: ({ req }) => ({ req })
 })
 
 Mongoose.connect(URI, { useUnifiedTopology: true, useNewUrlParser: true })
