@@ -9,8 +9,11 @@ const PostSchema = new mongoose.Schema({
     comments: [
         { body: String, username: String, createdAt: String }
     ],
-    user: 
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }
 });
 
 
-export const PostModel = mongoose.model('PostSchema', PostSchema)
+export const Post = mongoose.model('PostSchema', PostSchema)
